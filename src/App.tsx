@@ -9,6 +9,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 // Pages
 import Index from "./pages/Index";
 import Search from "./pages/Search";
+import Artists from "./pages/Artists";
+import Albums from "./pages/Albums";
+import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -28,6 +31,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/artists" element={<Artists />} />
+            <Route path="/albums" element={<Albums />} />
+            <Route path="/favorites" element={<Favorites />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/artists/:artistId" element={<Artist />} />
