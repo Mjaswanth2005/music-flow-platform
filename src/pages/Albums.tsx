@@ -1,18 +1,24 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAlbums } from '@/services/api';
 import MainLayout from '@/components/layout/MainLayout';
 import AlbumCard from '@/components/music/AlbumCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle, RefreshCw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Albums = () => {
   const { toast } = useToast();
+  const [retryCount, setRetryCount] = useState(0);
   
-  const { data: albums, isLoading, error } = useQuery({
-    queryKey: ['albums'],
-    queryFn: getAlbums
+  const { data: albums, isLoading, error, refetch } = useQuery({
+    queryKey: ['albums', retryCount],
+    queryFn: getAlbums,
+    retry: 1, 
+    retryDelay: 1000
   });
 
   // Handle error with useEffect to prevent render loop
@@ -25,6 +31,10 @@ const Albums = () => {
       });
     }
   }, [error, toast]);
+
+  const handleRetry = () => {
+    setRetryCount(prev => prev + 1);
+  };
 
   return (
     <MainLayout>
@@ -41,6 +51,23 @@ const Albums = () => {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <Alert variant="destructive" className="mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription className="flex flex-col gap-3">
+              <p>Failed to load albums. Please check your connection and try again.</p>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-fit" 
+                onClick={handleRetry}
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Retry
+              </Button>
+            </AlertDescription>
+          </Alert>
         ) : albums?.length ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {albums.map((album) => (
@@ -49,7 +76,7 @@ const Albums = () => {
                 id={album.id}
                 title={album.title}
                 artist={album.artist_name}
-                coverUrl={album.cover_art_url || `https://images.unsplash.com/photo-${Math.floor(Math.random() * 10000) + 1500000000}-${Math.random().toString(36).substring(2, 10)}?w=300&auto=format&fit=crop&q=60`}
+                coverUrl={album.cover_art_url || `/public/lovable-uploads/01801b6c-697b-49e7-8845-a127e88259a2.png`}
                 year={new Date(album.release_date).getFullYear().toString()}
               />
             ))}
