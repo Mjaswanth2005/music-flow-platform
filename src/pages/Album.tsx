@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getAlbumById } from '@/services/api';
@@ -20,13 +20,16 @@ const Album = () => {
     enabled: !!albumId
   });
 
-  if (error) {
-    toast({
-      title: 'Error',
-      description: 'Failed to load album data',
-      variant: 'destructive',
-    });
-  }
+  // Handle error with useEffect to prevent render loop
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to load album data',
+        variant: 'destructive',
+      });
+    }
+  }, [error, toast]);
 
   const AlbumHeader = () => {
     if (isLoading) {

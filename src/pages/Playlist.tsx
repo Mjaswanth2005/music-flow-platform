@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPlaylistById } from '@/services/api';
@@ -22,13 +22,16 @@ const Playlist = () => {
     enabled: !!playlistId && isAuthenticated,
   });
 
-  if (error) {
-    toast({
-      title: 'Error',
-      description: 'Failed to load playlist data',
-      variant: 'destructive',
-    });
-  }
+  // Handle error with useEffect to prevent render loop
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to load playlist data',
+        variant: 'destructive',
+      });
+    }
+  }, [error, toast]);
 
   if (!isAuthenticated) {
     return (
