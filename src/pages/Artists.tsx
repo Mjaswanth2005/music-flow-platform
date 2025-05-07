@@ -48,7 +48,7 @@ const Artists = () => {
                 key={artist.id}
                 id={artist.id}
                 name={artist.name}
-                imageUrl={artist.profile_picture_url}
+                imageUrl={artist.profile_picture_url || `https://images.unsplash.com/photo-${Math.floor(Math.random() * 10000) + 1500000000}-${Math.random().toString(36).substring(2, 10)}?w=300&auto=format&fit=crop&q=60`}
                 genres={artist.genres}
               />
             ))}

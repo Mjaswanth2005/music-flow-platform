@@ -66,8 +66,18 @@ const Playlist = () => {
     
     return playlist ? (
       <div className="flex space-x-6 mb-8">
-        <div className="w-48 h-48 bg-zinc-800 flex items-center justify-center rounded-md shadow-lg">
-          <span className="text-6xl">🎵</span>
+        <div className="w-48 h-48 bg-zinc-800 flex items-center justify-center rounded-md shadow-lg overflow-hidden">
+          {playlist.cover_url ? (
+            <img 
+              src={playlist.cover_url} 
+              alt={playlist.name} 
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center">
+              <span className="text-6xl">🎵</span>
+            </div>
+          )}
         </div>
         <div className="flex-1">
           <p className="text-sm font-medium text-zinc-400 mb-1">
@@ -119,7 +129,7 @@ const Playlist = () => {
                       id={song.id}
                       title={song.title}
                       artist={song.artist_name}
-                      coverUrl={song.file_url}
+                      coverUrl={song.file_url || 'https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?w=80&auto=format&fit=crop&q=60'}
                       duration={formatDuration(song.duration)}
                     />
                   </div>

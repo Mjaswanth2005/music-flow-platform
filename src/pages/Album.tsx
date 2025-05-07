@@ -49,7 +49,7 @@ const Album = () => {
     return album ? (
       <div className="flex space-x-6 mb-8">
         <img 
-          src={album.cover_art_url || 'https://via.placeholder.com/200'} 
+          src={album.cover_art_url || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=60'} 
           alt={album.title}
           className="w-48 h-48 rounded-md object-cover shadow-lg"
         />
@@ -100,7 +100,7 @@ const Album = () => {
                       id={song.id}
                       title={song.title}
                       artist={album.artist_name}
-                      coverUrl={album.cover_art_url}
+                      coverUrl={album.cover_art_url || `https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=80&auto=format&fit=crop&q=60`}
                       duration={formatDuration(song.duration)}
                     />
                   </div>

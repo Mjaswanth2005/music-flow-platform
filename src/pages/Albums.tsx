@@ -49,7 +49,7 @@ const Albums = () => {
                 id={album.id}
                 title={album.title}
                 artist={album.artist_name}
-                coverUrl={album.cover_art_url}
+                coverUrl={album.cover_art_url || `https://images.unsplash.com/photo-${Math.floor(Math.random() * 10000) + 1500000000}-${Math.random().toString(36).substring(2, 10)}?w=300&auto=format&fit=crop&q=60`}
                 year={new Date(album.release_date).getFullYear().toString()}
               />
             ))}

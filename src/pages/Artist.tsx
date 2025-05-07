@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -45,7 +46,7 @@ const Artist = () => {
     return artist ? (
       <div className="flex items-center space-x-6 mb-8">
         <img 
-          src={artist.profile_picture_url || 'https://via.placeholder.com/200'} 
+          src={artist.profile_picture_url || 'https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?w=200&auto=format&fit=crop&q=60'} 
           alt={artist.name}
           className="w-32 h-32 rounded-full object-cover"
         />
@@ -96,7 +97,7 @@ const Artist = () => {
                       id={album.id}
                       title={album.title}
                       artist={artist.name}
-                      coverUrl={album.cover_art_url}
+                      coverUrl={album.cover_art_url || `https://images.unsplash.com/photo-${Math.floor(Math.random() * 10000) + 1500000000}-${Math.random().toString(36).substring(2, 10)}?w=200&auto=format&fit=crop&q=60`}
                       year={new Date(album.release_date).getFullYear().toString()}
                     />
                   ))}
@@ -114,7 +115,7 @@ const Artist = () => {
                       id={song.id}
                       title={song.title}
                       artist={artist.name}
-                      coverUrl={song.cover_art_url || 'https://via.placeholder.com/50'}
+                      coverUrl={song.cover_art_url || 'https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?w=80&auto=format&fit=crop&q=60'}
                       duration={formatDuration(song.duration)}
                     />
                   ))}
