@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getArtistById } from '@/services/api';
@@ -19,13 +18,16 @@ const Artist = () => {
     enabled: !!artistId
   });
 
-  if (error) {
-    toast({
-      title: 'Error',
-      description: 'Failed to load artist data',
-      variant: 'destructive',
-    });
-  }
+  // Handle error with useEffect to prevent render loop
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to load artist data',
+        variant: 'destructive',
+      });
+    }
+  }, [error, toast]);
 
   const ArtistHeader = () => {
     if (isLoading) {

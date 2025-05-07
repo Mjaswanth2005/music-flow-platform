@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAlbums } from '@/services/api';
 import MainLayout from '@/components/layout/MainLayout';
@@ -15,13 +15,16 @@ const Albums = () => {
     queryFn: getAlbums
   });
 
-  if (error) {
-    toast({
-      title: 'Error',
-      description: 'Failed to load albums',
-      variant: 'destructive',
-    });
-  }
+  // Handle error with useEffect to prevent render loop
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to load albums',
+        variant: 'destructive',
+      });
+    }
+  }, [error, toast]);
 
   return (
     <MainLayout>
