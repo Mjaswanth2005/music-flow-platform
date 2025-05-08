@@ -18,6 +18,7 @@ import Register from "./pages/Register";
 import Artist from "./pages/Artist";
 import Album from "./pages/Album";
 import Playlist from "./pages/Playlist";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/artists/:artistId" element={<Artist />} />
             <Route path="/albums/:albumId" element={<Album />} />
             <Route path="/playlists/:playlistId" element={<Playlist />} />
